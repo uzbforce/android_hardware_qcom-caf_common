@@ -1,0 +1,27 @@
+cc_binary {
+    name: "nqnfcinfo",
+    // zephyr ships the stock vendor nqnfcinfo binary
+    // (vendor/xiaomi/zephyr/proprietary/vendor/bin/nqnfcinfo) and the OSS
+    // 5.15 kernel drop has no <linux/nfc/nfcinfo.h>. This module also
+    // installs to the same vendor/bin/nqnfcinfo path, so keep it disabled:
+    // building it would either fail or overwrite the stock binary.
+    enabled: false,
+    vendor: true,
+
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wextra",
+    ],
+
+    srcs: [
+        "main.cpp",
+    ],
+
+    header_libs: ["generated_kernel_headers"],
+
+    shared_libs: [
+        "libc",
+        "libbase"
+    ],
+}
